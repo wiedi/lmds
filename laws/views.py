@@ -3,7 +3,10 @@ from models import *
 
 
 def get_instance(request):
-    return Instance.objects.get(ipv4 = request.META['REMOTE_ADDR'])
+    try:
+        return Instance.objects.get(ipv4 = request.META['REMOTE_ADDR'])
+    except:
+        return None
 
 def api_version(request):
     versions = [
@@ -21,23 +24,36 @@ def api_version(request):
     return HttpResponse("\n".join(versions), content_type = "text/plain")
 
 def meta_data(request, version):
-    calls = """instance-id"""
-    return HttpResponse(calls, content_type = "text/plain")
+    calls = [
+        "instance-id",
+        "hostname",
+        "local-hostname"
+    ]
+    return HttpResponse("\n".join(calls), content_type = "text/plain")
 
 
 def instance_id(request, version):
     i = get_instance(request)
-    
-    if not i:
-        return HttpResponseNotFound("", content_type = "text/plain")
+    if not i: return HttpResponseNotFound("", content_type = "text/plain")
     
     return HttpResponse(i.instance_id(), content_type = "text/plain")
 
 
 def user_data(request, version):
     i = get_instance(request)
-    
-    if not i:
-        return HttpResponseNotFound("", content_type = "text/plain")
+    if not i: return HttpResponseNotFound("", content_type = "text/plain")
     
     return HttpResponse(i.user_data, content_type = "text/plain")
+
+def hostname(request, version):
+    i = get_instance(request)
+    if not i: return HttpResponseNotFound("", content_type = "text/plain")
+    
+    return HttpResponse(i.hostname, content_type = "text/plain")
+
+
+def local_hostname(request, version):
+    i = get_instance(request)
+    if not i: return HttpResponseNotFound("", content_type = "text/plain")
+    
+    return HttpResponse(i.hostname.split('.')[0], content_type = "text/plain")
