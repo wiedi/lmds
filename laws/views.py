@@ -27,7 +27,8 @@ def meta_data(request, version):
     calls = [
         "instance-id",
         "hostname",
-        "local-hostname"
+        "local-hostname",
+        "mac",
     ]
     return HttpResponse("\n".join(calls), content_type = "text/plain")
 
@@ -45,6 +46,7 @@ def user_data(request, version):
     
     return HttpResponse(i.user_data, content_type = "text/plain")
 
+
 def hostname(request, version):
     i = get_instance(request)
     if not i: return HttpResponseNotFound("", content_type = "text/plain")
@@ -57,3 +59,10 @@ def local_hostname(request, version):
     if not i: return HttpResponseNotFound("", content_type = "text/plain")
     
     return HttpResponse(i.hostname.split('.')[0], content_type = "text/plain")
+
+
+def mac(request, version):
+    i = get_instance(request)
+    if not i: return HttpResponseNotFound("", content_type = "text/plain")
+    
+    return HttpResponse(i.mac_addr, content_type = "text/plain")
