@@ -21,27 +21,7 @@ def api_version(request):
     return HttpResponse("\n".join(versions), content_type = "text/plain")
 
 def meta_data(request, version):
-    calls = """amiid
-ami-launch-index
-ami-manifest-path
-block-device-mapping/
-hostname
-instance-action
-instance-id
-instance-type
-kernel-id
-local-hostname
-local-ipv4
-ipv4-associations
-mac
-network/
-placement/
-public-hostname
-public-ipv4
-public-keys/
-reservation-id
-security-groups
-"""
+    calls = """instance-id"""
     return HttpResponse(calls, content_type = "text/plain")
 
 
