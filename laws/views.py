@@ -3,7 +3,7 @@ from models import *
 
 
 def get_instance(request):
-    return Instance.objects.get(ip = request.META['REMOTE_ADDR'])
+    return Instance.objects.get(ipv4 = request.META['REMOTE_ADDR'])
 
 def api_version(request):
     versions = [
