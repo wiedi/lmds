@@ -20,7 +20,7 @@ def api_version(request):
     ]
     return HttpResponse("\n".join(versions), content_type = "text/plain")
 
-def meta_data(request):
+def meta_data(request, version):
     calls = """amiid
 ami-launch-index
 ami-manifest-path
