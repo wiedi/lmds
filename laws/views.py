@@ -58,7 +58,7 @@ def local_hostname(request, version):
     i = get_instance(request)
     if not i: return HttpResponseNotFound("", content_type = "text/plain")
     
-    return HttpResponse(i.hostname.split('.')[0], content_type = "text/plain")
+    return HttpResponse(i.hostname, content_type = "text/plain")
 
 
 def mac(request, version):
