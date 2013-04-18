@@ -10,7 +10,7 @@ class Command(BaseCommand):
     
     def handle(self, *args, **options):
         
-        url = settings.LIMEADE_MASTER + '/cloud/api/lmds_sync/' + settings.LIMEADE_ZONE
+        url = settings.LIMEADE_MASTER + '/cloud/export/lmds/' + settings.LIMEADE_ZONE + "/"
         try:
             f = open(urllib.urlretrieve(url)[0])
         except:
@@ -20,7 +20,7 @@ class Command(BaseCommand):
         
         con.execute('begin transaction;')
         con.execute('delete from laws_instance;')
-        con.executemany(u"insert into laws_instance (id, hostname, mac_addr, ipv4, user_data) values (?, ?, ?, ?, ?)", csv.reader(f))
+        con.executemany(u"insert into laws_instance (id, hostname, mac_addr, ip, user_data) values (?, ?, ?, ?, ?)", csv.reader(f))
         
         con.commit()
         f.close()
