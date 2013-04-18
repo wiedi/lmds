@@ -1,4 +1,7 @@
 # Django settings for lmds project.
+import os
+
+SITE_ROOT = os.path.dirname(os.path.realpath(__file__))
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -12,7 +15,7 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'dev.db',                      # Or path to database file if using sqlite3.
+        'NAME': SITE_ROOT + '/lmds.db',         # Or path to database file if using sqlite3.
         'USER': '',                      # Not used with sqlite3.
         'PASSWORD': '',                  # Not used with sqlite3.
         'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
@@ -157,3 +160,11 @@ LOGGING = {
 
 LIMEADE_MASTER = "http://limeade.local"
 LIMEADE_ZONE = 'ber-dev'
+
+try:
+    from local_settings import * 
+except ImportError: 
+    try:
+        from lmds.local_settings import *
+    except ImportError:
+        pass
