@@ -13,7 +13,7 @@ def instance_id_from_mac(mac):
 class Instance(models.Model):
     hostname   = models.CharField(max_length=default_length)
     mac_addr   = models.CharField(max_length=18)
-    ipv4       = models.CharField(max_length=18)
+    ip         = models.GenericIPAddressField()
     _user_data = models.TextField(db_column='user_data', blank=True)
     
     def set_user_data(self, user_data):

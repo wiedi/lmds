@@ -4,7 +4,7 @@ from models import *
 
 def get_instance(request):
 	try:
-		return Instance.objects.get(ipv4 = request.META['REMOTE_ADDR'])
+		return Instance.objects.get(ip = request.META['REMOTE_ADDR'])
 	except:
 		return None
 
